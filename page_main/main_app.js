@@ -239,6 +239,34 @@ ${CONFIG.WEATHER_ICONS[day.weather_code] || '🌡️'} High: ${day.max_temp}°${
             const response = await fetch(`${CONFIG.API_ENDPOINTS.search}/${encodeURIComponent(args.query)}`);
             const data = await response.json();
             console.warn('Search response:', data);
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message function-result search';
+            
+            const titleDiv = document.createElement('div');
+            titleDiv.className = 'result-title';
+            const titleLink = document.createElement('a');
+            titleLink.href = data.source;
+            titleLink.target = '_blank';
+            titleLink.rel = 'noopener noreferrer';
+            titleLink.textContent = data.title;
+            titleDiv.appendChild(titleLink);
+            
+            const snippetDiv = document.createElement('div');
+            snippetDiv.className = 'result-snippet';
+            snippetDiv.textContent = data.snippet;
+            
+            const sourceDiv = document.createElement('div');
+            sourceDiv.className = 'result-source';
+            const sourceLink = document.createElement('a');
+            sourceLink.href = data.source;
+            sourceLink.target = '_blank';
+            sourceLink.rel = 'noopener noreferrer';
+            sourceLink.textContent = data.source;
+            sourceDiv.appendChild(sourceLink);
+            
+            messageDiv.appendChild(titleDiv);
+            messageDiv.appendChild(snippetDiv);
+            messageDiv.appendChild(sourceDiv);
             
             
             if (UI.elements.transcript.firstChild) {
